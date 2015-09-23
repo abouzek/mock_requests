@@ -1,0 +1,10 @@
+{% from "_formhelpers.html" import render_field %}
+<form method=post action="/">
+  <dl>
+    {{ render_field(form.method) }}
+    {{ render_field(form.content_type) }}
+    {{ render_field(form.code) }}
+    {{ render_field(form.body) }}
+  </dl>
+  <p><input type=submit value=Create>
+</form>
