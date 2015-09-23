@@ -1,6 +1,6 @@
 from flask import Flask
 from flask.ext.mongoengine import MongoEngine
-from mock_requests.views import mocks
+from mox.views import mocks
 
 app = Flask(__name__)
 app.config["MONGODB_SETTINGS"] = {"DB": "mock_requests"}
