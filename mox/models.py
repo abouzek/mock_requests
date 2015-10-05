@@ -1,6 +1,6 @@
 import datetime
 from flask import url_for
-from mox import db
+from app import db
 import uuid
 
 class MockResponse(db.Document):

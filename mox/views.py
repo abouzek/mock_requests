@@ -1,13 +1,13 @@
 from flask import Blueprint, request, make_response, jsonify, render_template
 from flask.views import MethodView
 from flask.ext.mongoengine.wtf import model_form
-from mox.constants import codes, methods, content_types
-from mox.forms import MockResponseForm
+from constants import codes, methods, content_types
+from forms import MockResponseForm
 
 mocks = Blueprint('mocks', __name__)
 
 def tuh(id, method):
-	from mox.models import MockResponse
+	from models import MockResponse
 	r = MockResponse.objects.get_or_404(pk=id)
 	if r.method != method:
 		return '', 404
@@ -23,7 +23,7 @@ def make():
 	form = MockResponseForm(request.form)
 	if request.method == 'POST' and form.validate():
 		# Creating a mock response
-		from mox.models import MockResponse
+		from models import MockResponse
 		mr = MockResponse(
 			code=form.code.data, 
 			method=form.method.data, 

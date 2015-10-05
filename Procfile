@@ -1,1 +1,1 @@
-web: gunicorn manage:app --log-file=-
+web: gunicorn --pythonpath mox mox.app:app --log-file=-

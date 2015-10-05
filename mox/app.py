@@ -1,6 +1,6 @@
 from flask import Flask
 from flask.ext.mongoengine import MongoEngine
-from mox.views import mocks
+from views import mocks
 import os
 
 app = Flask(__name__)
