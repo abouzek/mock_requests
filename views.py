@@ -20,16 +20,31 @@ def show(id):
 
 @mocks.route('/', methods=['GET','POST'])
 def make():
-	from mox.models import MockResponse
 	form = MockResponseForm(request.form)
 	if request.method == 'POST' and form.validate():
-		mr = MockResponse(code=form.code.data, 
+		# Creating a mock response
+		from mox.models import MockResponse
+		mr = MockResponse(
+			code=form.code.data, 
 			method=form.method.data, 
 			content_type=form.content_type.data, 
 			body=form.body.data
 		)
-		mr.save()
+
+		# Check for existing and return it if exists
+		existing = MockResponse.objects(
+			code=mr.code, 
+			method=mr.method, 
+			content_type=mr.content_type,
+			body=mr.body
+		).first()
+
+		if existing is None:
+			mr.save()
+		else:
+			mr = existing
 		return jsonify(id=str(mr.id))
+
 	return render_template('home.html', form=form)
 
 
