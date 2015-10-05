@@ -1,10 +1,52 @@
-{% from "_formhelpers.html" import render_field %}
-<form method=post action="/">
-  <dl>
-    {{ render_field(form.method) }}
-    {{ render_field(form.content_type) }}
-    {{ render_field(form.code) }}
-    {{ render_field(form.body) }}
-  </dl>
-  <p><input type=submit value=Create>
-</form>
+{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
+{% block title %}mox - mock responses{% endblock %}
+{% block head %}
+	{{ super() }}
+	<style type="text/css">
+		.subtitle { color: #336699; }
+		#jumbo {
+			padding-top: 5px;
+		}
+		#contain {
+			padding-top: 25px;
+		}
+	</style>
+{% endblock %}
+{% block content %}
+	    <div class="container" id="contain">
+        	<div class="jumbotron" id="jumbo">
+	        	<h1 class="text-center">mox</h1>
+				<p class="subtitle text-center">
+					create mock responses for testing
+				</p>
+	            <div id='alert_placeholder'></div>
+				<br>
+	            {% call macros.render_form(form, action_url='/', id='createForm', clazz='MockResponseForm') %}
+	                {{ macros.render_field(form.method, label_visible=true) }}
+	                {{ macros.render_field(form.content_type, label_visible=true) }}
+	                {{ macros.render_field(form.code, label_visible=true) }}
+	                {{ macros.render_field(form.body, label_visible=true) }}
+	            {% endcall %}
+        	</div>
+	   	</div>
+   		<script type="text/javascript">
+
+			$('#createForm').submit(function(ev) {
+				$.post($(this).attr('action'), $(this).serialize(), function(response) {
+					var link = window.location.href + response["id"];
+					var text = 'Success! Your mock response can be found here: ' + link;
+					var html =
+						'<div class="alert alert-success" role="alert"> ' +
+							'Success! Your mock response can be found here: <a href=' + link + ' class="alert-link">' + link + '</a>' +
+						'</div>';
+					$("#alert_placeholder").html(html);
+				});
+
+				ev.preventDefault();
+
+				return false;
+			});
+
+		</script>
+{% endblock content %}

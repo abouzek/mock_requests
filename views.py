@@ -27,7 +27,7 @@ def make():
 			method=form.method.data, 
 			content_type=form.content_type.data, 
 			body=form.body.data
-			)
+		)
 		mr.save()
 		return jsonify(id=str(mr.id))
 	return render_template('home.html', form=form)
