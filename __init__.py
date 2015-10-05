@@ -4,7 +4,6 @@ from mox.views import mocks
 import os
 
 app = Flask(__name__)
-app.config["MONGO"]
 app.config["MONGODB_SETTINGS"] = {
 	"db": "mox"
 }
