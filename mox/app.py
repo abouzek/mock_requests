@@ -9,8 +9,8 @@ app.config["MONGODB_SETTINGS"] = {
 }
 app.config["SECRET_KEY"] = "KeepThisS3cr3t"
 
-if os.environ.get('PRODUCTION'):
-	app.config["MONGODB_SETTINGS"]["host"] = os.environ.get("PROD_MONGODB")
+if os.environ.get('HEROKU') == 1:
+	app.config["MONGODB_SETTINGS"]["host"] = os.environ.get("MONGODB_URI")
 
 db = MongoEngine(app)
 app.register_blueprint(mocks)
